@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Arithmetic and Geometric Sequences and Series</title>
+</head>
+<body>
+	
+
+<h2>Arithmetic and Geometric Sequences and Series Solver</h2>
+    
+<P>A program that will identify and then solve Arithmetic and Geometric Sequences and Series<br>
+after the user inputs the first three terms, a desired unknown term to be calculated,<br>
+and a starting and ending term for finding the sum of the related series.</P>
+    
+<P>The Arithmetic Sequence and Series Formulas used are:
+<UL>
+<LI>a<sub>n</sub> = a<sub>1</sub> + (n -1)*d where d = common difference</LI>
+<LI>S<sub>n</sub> = (n/2)(a<sub>1</sub> + a<sub>n</sub>)</LI>
+</UL>
+</P>
+
+<P>The Geometric Sequence and Series Formulas used are:
+<UL>
+<!-- Symbols used:  &#8734; = infinity &#60; = less than-->
+<LI>a<sub>n</sub> = a<sub>1</sub> * r<sup>n-1</sup> where r = common ratio</LI>
+<LI>S<sub>n</sub> = a<sub>1</sub> * (1-r<sup>n</sup>)/(1-r)</LI>
+<LI>S<sub>&#8734;</sub> = a<sub>1</sub> * (1)/(1-r), where -1&#60;r&#60;1</LI>
+</UL>
+</P>
+
+<P>This program is written in JavaScript.</P>
+
+<P>By Mr. C. July 18, 2015</P>
+
+<script type="text/javascript">
+
+// **** Description ****
+// Write a program that will identify and then solve 
+// Arithmetic and Geometric Sequences and Series
+// after the user inputs the first three terms.
+// *********************
+
+// **** Define and initialize variables ****
+var a1 = "";          // first term of the sequence, input by user.
+var a2 = "";          // second term of the sequence, input by user.
+var a3 = "";          // third term of the sequence, input by user.
+var n = "";           // any term of the sequence, input by user.
+var an_arith = "";    // value of user requested nth term in arithmetic sequence.
+var an_geo = "";      // value of user requested nth term in geometic sequence.
+var n_start = "";     // start term for sum of series, input by user.
+var n_end = "";       // end term for sum of series, input by user.
+var a_start = "0.0";  // first term in finite series.
+var a_end   = "0.0";  // last term in finite series.
+var n_series = "0.0"; // number of terms in finite series.
+var sum_arith = "0.0";   // finite sum of arithmetic series.
+var sum_geo = "0.0";     // finite sum of geometric series.
+var sum_inf_geo = "0.0"; // finite sum of infinite geometric series.
+var d = 0.0;     // d = common difference of an arithmetic sequence , calculated.
+var r = 0.0;     // r = common ratio of an arithmetic sequence, calculated.
+var d12 = 0.0;   // test d, a1 + d12 =? a2 where d12 = a2-a1
+var d23 = 0.0;   // test d, a2 + d23 =? a3 where d23 = a3-a2
+var r12 = 0.0;   // test r, a1 * r12 =? a2 where r12 = a2/a1
+var r23 = 0.0;   // test r, a2 * r23 =? a3 where r23 = a3/a2
+var arithmetic = false; // Boolean, is the sequence arithmetic?
+var geometric = false;  // Boolean, is the sequence geometric?
+// *****************************************
+
+// **** Collect user input via popup boxes ****
+a1 = prompt("Enter the first term of the sequence", "Type the value here");
+a2 = prompt("Enter the second term of the sequence", "Type the value here");
+a3 = prompt("Enter the third term of the sequence", "Type the value here");
+n = prompt("Enter the desired term number of the sequence", "Type the value here");
+n_start = prompt("Enter the stating term number of the finite series to be summed", "Type the value here");
+n_end = prompt("Enter the ending term number > starting number of the series to be summed", "Type the value here");
+// ***************************************
+
+// **** Convert user text input into decimal numbers ****
+/*  
+The parseFloat("string") function returns a number,
+where "string" is the string value you want to parse.
+Leading and trailing spaces are allowed and will be ignored.
+If the first non space character is not a sign (+ or -), numeral (0-9), 
+decimal point or an exponent, and cannot be converted to a number, 
+parseFloat returns NaN. While parsing after the first non space character,
+if the function encounters a character other than a sign (+ or -),
+numeral (0-9), a decimal point, or an exponent, it returns the value 
+up to that point and ignores that character and all subsequent characters. 
+*/
+a1 = parseFloat(a1);
+a2 = parseFloat(a2);
+a3 = parseFloat(a3);
+n = parseFloat(n);
+n_start = parseFloat(n_start);
+n_end = parseFloat(n_end);
+// ***************************************************
+
+// **** Determine if the sequence of three numbers is arithmetic ****
+// Check if the same common difference d separates the three terms.
+// Note built-in function Math.pow(base,exponent) raises a number to a power.
+// example: d = Math.pow(b,2) - (4*a*c); for b*b-4ac
+d12 = a2-a1;
+d23 = a3-a2
+if(d12 === d23)
+  {
+  arithmetic = true;
+  d = d12; // if the sequence is arithmetic, set d = to d12 or d23.
+  document.write("<P>The sequence ", a1, ", ", a2, ", ", a3, ", ", "is arithmetic, d = ", d);
+  }//end of d12===d23 if block
+else
+  {
+  document.write("<P>The sequence ", a1, ", ", a2, ", ", a3, ", ", "is NOT arithmetic.");
+  }
+  
+if(arithmetic == true)
+  {
+  // Calculate the user requested nth term.
+  an_arith = a1 + (n - 1)* d;
+  document.write("<P>The ", n, "th term is ", an_arith);
+  // Calculate the user requested finite series.
+  n_series = (n_end - n_start) + 1;
+  a_start = a1 +(n_start - 1) * d;
+  a_end = a1 +(n_end - 1) * d;
+  sum_arith = (n_series/2)*(a_start + a_end);
+  document.write("<P>The sum from arithmetic sequence term ", n_start, " to term ", n_end, " is ", sum_arith);
+  }//end of arithmetic===true if block.
+  
+// ***************************************************
+// **** Determine if the sequence of three numbers is geometric ****
+// Check if the same common ratio r separates the three terms.
+// Note built-in function Math.pow(base,exponent) raises a number to a power.
+// example: d = Math.pow(b,2) - (4*a*c); for b*b-4ac
+r12 = a2/a1;
+r23 = a3/a2
+if(r12 === r23)
+  {
+  geometric = true;
+  r = r12; // if the sequence is geometic, set r = to r12 or r23.
+  document.write("<P>The sequence ", a1, ", ", a2, ", ", a3, ", ", "is geometric, r = ", r);
+  }//end of r12===r23 if block
+else
+  {
+  document.write("<P>The sequence ", a1, ", ", a2, ", ", a3, ", ", "is NOT geometric.");
+  }
+  
+if(geometric == true)
+  {
+  // Calculate the user requested nth term.
+  an_geo = a1 * (Math.pow(r,n-1));
+  document.write("<P>The ", n, "th term is ", an_geo);
+  // Calculate the user requested finite series.
+  n_series = (n_end - n_start) + 1;
+  a_start = a1 * (Math.pow(r,n_start-1));
+  a_end = a1 * (Math.pow(r,n_end-1));
+  sum_geo = a_start * ((1 - Math.pow(r,n_series))/(1 - r));
+  document.write("<P>The sum from geometic sequence term ", n_start, " to term ", n_end, " is ", sum_geo);
+  // Calculate the infinite geometric series if it exists.
+  if(Math.abs(r) < 1)
+      {
+	  sum_inf_geo = a1 * 1/(1-r);
+	  document.write("<P>Since -1 < r < 1 the sum of the infinite geometic series is ", sum_inf_geo);
+	  }// end of -1<r<1 if block
+   else
+      {
+	  document.write("<P>Since the absolute value of r is greater than 1, the sum of the infinite geometic series does not converge.");
+	  }
+ }//end of geometric===true if block.
+  
+// ***************************************************
+
+
+// ***************************************************
+
+
+
+
+</script>
+</body>
+</html>
